@@ -1,14 +1,36 @@
 // ----------------------------------------------------------------------------------------------
-// Developer Nechesov Andrey: Facebook.com/Nechesov   
-// Enjoy. (c) PRCR.org ICO Business Platform 2017. The PRCR Licence.
-// Eth address: 0x788C45Dd60aE4dBE5055b5Ac02384D5dc84677b0
+// Developer Nechesov Andrey & ObjectMicro, Inc 
 // ----------------------------------------------------------------------------------------------
 // ERC Token Standard #20 Interface
 // https://github.com/ethereum/EIPs/issues/20
 
-pragma solidity ^0.4.16;    
+pragma solidity ^0.4.18;    
 
-import "./math_lib.sol";
+  library SafeMath {
+    function mul(uint256 a, uint256 b) internal returns (uint256) {
+      uint256 c = a * b;
+      assert(a == 0 || c / a == b);
+      return c;
+    }
+
+    function div(uint256 a, uint256 b) internal returns (uint256) {
+      // assert(b > 0); // Solidity automatically throws when dividing by 0
+      uint256 c = a / b;
+      // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+      return c;
+    }
+
+    function sub(uint256 a, uint256 b) internal returns (uint256) {
+      assert(b <= a);
+      return a - b;
+    }
+
+    function add(uint256 a, uint256 b) internal returns (uint256) {
+      uint256 c = a + b;
+      assert(c >= a);
+      return c;
+    }
+  }
 
   contract ERC20Interface {
       // Get the total token supply
@@ -44,14 +66,14 @@ import "./math_lib.sol";
       string public constant name = "BQT token";
       uint8 public constant decimals = 18; 
            
-      uint256 public constant maxTokens = 200*10**6*10**18; 
+      uint256 public constant maxTokens = 800*10**6*10**18; 
       uint256 public constant ownerSupply = maxTokens*51/100;
       uint256 _totalSupply = ownerSupply;  
 
-      uint256 public constant token_price = 10**18*1/250; 
+      uint256 public constant token_price = 10**18*1/800; 
       uint256 public pre_ico_start = 1506729600;
-      uint256 public ico_start = 1512691200;
-      uint256 public ico_finish = 1518134400; 
+      uint256 public ico_start = 1518048000;
+      uint256 public ico_finish = 1521936000; 
       uint public constant minValuePre = 10**18*1/1000000; 
       uint public constant minValue = 10**18*1/1000000; 
       uint public constant maxValue = 3000*10**18;
@@ -95,7 +117,7 @@ import "./math_lib.sol";
       // Constructor
       function Bqt_Token() {
           //owner = msg.sender;
-          owner = 0x2eee6534bfa5512ded7f700d8d26e88c1688c854;
+          owner = 0xC73e37cbf5120E4Fa112ec6751B72d4aC02CEACa;
           balances[owner] = ownerSupply;
       }
       
@@ -203,39 +225,79 @@ import "./math_lib.sol";
         if(msg.value > maxValue) throw;
 
         uint tokens_buy = (msg.value*10**18).div(token_price);
+        uint tokens_buy_total;
 
         if(!(tokens_buy > 0)) throw;   
-
         
-        if((tnow < pre_ico_start + 86400*15)&&(tnow < ico_start)) {
-          tokens_buy = tokens_buy*150/100;
+        //Bonus for total tokens amount for all contract
+        uint b1 = 0;
+        //Time bonus on Pre-ICO && ICO
+        uint b2 = 0;
+        //Individual bonus for tokens amount
+        uint b3 = 0;
+
+        if(_totalSupply <= 5*10**6*10**18) {
+          b1 = tokens_buy*30/100;
         }
-        if((pre_ico_start + 86400*15 <= tnow)&&(tnow < pre_ico_start + 86400*30)&&(tnow < ico_start)) {
-          tokens_buy = tokens_buy*145/100;
+        if((5*10**6*10**18 < _totalSupply)&&(_totalSupply <= 10*10**6*10**18)) {
+          b1 = tokens_buy*25/100;
         }
-        if((pre_ico_start + 86400*30 <= tnow)&&(tnow < pre_ico_start + 86400*45)&&(tnow < ico_start)) {
-          tokens_buy = tokens_buy*140/100;
+        if((10*10**6*10**18 < _totalSupply)&&(_totalSupply <= 15*10**6*10**18)) {
+          b1 = tokens_buy*20/100;
         }
-        if((pre_ico_start + 86400*45 <= tnow)&&(tnow < ico_start)) {
-          tokens_buy = tokens_buy*135/100;
+        if((15*10**6*10**18 < _totalSupply)&&(_totalSupply <= 20*10**6*10**18)) {
+          b1 = tokens_buy*15/100;
+        }
+        if((20*10**6*10**18 < _totalSupply)&&(_totalSupply <= 25*10**6*10**18)) {
+          b1 = tokens_buy*10/100;
+        }
+        if(25*10**6*10**18 <= _totalSupply) {
+          b1 = tokens_buy*5/100;
+        }        
+
+        if(tnow < ico_start) {
+          b2 = tokens_buy*50/100;
+        }
+        if((ico_start + 86400*0 <= tnow)&&(tnow < ico_start + 86400*5)){
+          b2 = tokens_buy*10/100;
         } 
+        if((ico_start + 86400*5 <= tnow)&&(tnow < ico_start + 86400*10)){
+          b2 = tokens_buy*8/100;        
+        } 
+        if((ico_start + 86400*10 <= tnow)&&(tnow < ico_start + 86400*20)){
+          b2 = tokens_buy*6/100;        
+        } 
+        if((ico_start + 86400*20 <= tnow)&&(tnow < ico_start + 86400*30)){
+          b2 = tokens_buy*4/100;        
+        } 
+        if(ico_start + 86400*30 <= tnow){
+          b2 = tokens_buy*2/100;        
+        }
         
-        if((ico_start + 86400*0 <= tnow)&&(tnow < ico_start + 86400*1)){
-          tokens_buy = tokens_buy*120/100;
-        } 
-        if((ico_start + 86400*1 <= tnow)&&(tnow < ico_start + 86400*3)){
-          tokens_buy = tokens_buy*110/100;        
-        } 
-        if((ico_start + 86400*3 <= tnow)&&(tnow < ico_start + 86400*7)){
-          tokens_buy = tokens_buy*105/100;        
-        }         
-        if((ico_start + 86400*7 <= tnow)&&(tnow < ico_start + 86400*14)){
-          tokens_buy = tokens_buy*1025/1000;        
+
+        if((1000*10**18 <= tokens_buy)&&(5000*10**18 <= tokens_buy)) {
+          b3 = tokens_buy*5/100;
+        }
+        if((5001*10**18 <= tokens_buy)&&(10000*10**18 < tokens_buy)) {
+          b3 = tokens_buy*10/100;
+        }
+        if((10001*10**18 <= tokens_buy)&&(15000*10**18 < tokens_buy)) {
+          b3 = tokens_buy*15/100;
+        }
+        if((15001*10**18 <= tokens_buy)&&(20000*10**18 < tokens_buy)) {
+          b3 = tokens_buy*20/100;
+        }
+        if(20001*10**18 <= tokens_buy) {
+          b3 = tokens_buy*25/100;
         }
 
-        if(_totalSupply.add(tokens_buy) > maxTokens) throw;
-        _totalSupply = _totalSupply.add(tokens_buy);
-        balances[msg.sender] = balances[msg.sender].add(tokens_buy);         
+        tokens_buy_total = tokens_buy.add(b1);
+        tokens_buy_total = tokens_buy_total.add(b2);
+        tokens_buy_total = tokens_buy_total.add(b3);        
+
+        if(_totalSupply.add(tokens_buy_total) > maxTokens) throw;
+        _totalSupply = _totalSupply.add(tokens_buy_total);
+        balances[msg.sender] = balances[msg.sender].add(tokens_buy_total);         
 
         return true;
       }

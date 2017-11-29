@@ -1,0 +1,54 @@
+## Nechesov Andrey
+
+Tokens are transfered while the crowdale is still running, a token holder that receives his token can start trading them instantly. 
+
+In first time users get bonuses for tokens. 
+
+BQT Token Sale Details:
+
+1) ETH = 800 BQT Tokens
+2) Bonus for Total Tokens: 
+	a) total BQT <= 5M BQT 
+	   Bonus 30% BQT tokens
+	b) 5M BQT < total BQT < 10M BQT
+	   Bonus 25% BQT tokens	
+	c) 10M BQT < total BQT < 15M BQT
+	   Bonus 20% BQT tokens	
+	d) 15M BQT< total BQT < 20M BQT
+	   Bonus 15% BQT tokens	
+	e) 20M BQT < total BQT < 25M BQT
+	   Bonus 10% BQT tokens	
+	f) 25M BQT < total BQT < 25M BQT
+	   Bonus 10% BQT tokens	
+	g) 25M BQT< total BQT
+	   Bonus 5% BQT tokens	
+3) Bonus for TIME:
+	a) time < date ICO 
+	   Bonus 50% BQT
+	b) date ICO < time < date ICO + 5 days
+	   Bonus 10% BQT tokens	
+	c) date ICO + 5 days < time < date ICO + 10 days
+	   Bonus 8% BQT tokens	
+	d) date ICO + 10 days < time < date ICO + 20 days
+	   Bonus 6% BQT tokens	
+	e) date ICO + 20 days < time < date ICO + 30 days
+	   Bonus 4% BQT tokens	
+	f) date ICO + 30 days < time < close ICO
+	   Bonus 2% BQT tokens
+
+4) Bonus for Total Tokens:
+	
+	a) 1K BQT < total BQT < 5K BQT
+	   Bonus 5% BQT tokens	
+	b) 5K BQT < total BQT < 10K BQT
+	   Bonus 10% BQT tokens	
+	c) 10K BQT < total BQT < 15K BQT
+	   Bonus 15% BQT tokens	
+	d) 15K BQT < total BQT < 20K BQT
+	   Bonus 20% BQT tokens	
+	e) 20K BQT < total BQT
+	   Bonus 25% BQT tokens	
+
+Contract tested on Ropsten network.
+
+All functions checked!
